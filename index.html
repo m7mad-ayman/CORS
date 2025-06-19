@@ -5,8 +5,8 @@
     <script>
       const headers = {
         "Content-Type": "application/json",
-        "Token": "2f6ca9c1-ab32-4c8d-b0d7-1cac1a030f18",
-        "Fingerprint": "fa2608d4ae3c0168c840f76d7d962aaf"
+        "Token": localStorage.getItem('token'),
+        "Fingerprint": document.cookie.match(/Fingerprint=([^;]+)/)[1];
       };
 
       fetch("https://dashboard.rapyd.net/v1/merchants-portal/organization/api-keys", {
