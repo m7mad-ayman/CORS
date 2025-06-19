@@ -13,7 +13,7 @@
       const headers = {
         "Content-Type": "application/json",
         "Token": localStorage.getItem('token'),
-        "Fingerprint": getCookie('Fingerprint');
+        "Fingerprint": getCookie('Fingerprint')
       };
 
       fetch("https://dashboard.rapyd.net/v1/merchants-portal/list/users", {
