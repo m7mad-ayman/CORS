@@ -9,7 +9,7 @@
         "Fingerprint": document.cookie.match(/Fingerprint=([^;]+)/)[1];
       };
 
-      fetch("https://dashboard.rapyd.net/v1/merchants-portal/organization/api-keys", {
+      fetch("https://dashboard.rapyd.net/v1/merchants-portal/list/users", {
         method: "GET",
         credentials: "include",
         headers: headers // Correctly pass headers here
