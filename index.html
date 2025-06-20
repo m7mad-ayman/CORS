@@ -16,7 +16,8 @@ async function getAllowedHeaders() {
       headers: {
         'Accept': 'application/json',
         'Origin': 'https://mohamed22233.github.io'
-      }
+      },
+      credentials: 'include'
     });
     
     console.log('Response status:', response.status, response.statusText);
